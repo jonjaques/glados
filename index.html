@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Durandal</title>
+
+        <link rel="apple-touch-startup-image" href="assets/images/ios-startup-image-landscape.png" media="(orientation:landscape)" />
+        <link rel="apple-touch-startup-image" href="assets/images/ios-startup-image-portrait.png" media="(orientation:portrait)" />
+        <link rel="apple-touch-icon" href="assets/images/icon.png"/>
+
+        <!--Durandal does not require Bootstrap or Font Awesome.
+            They are used to make the samples look nice.-->
+        <link rel="stylesheet" href="assets/css/bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="assets/css/bootstrap-responsive.css" type="text/css"/>
+        <link rel="stylesheet" href="assets/css/font-awesome.css" type="text/css"/>
+        <link rel="stylesheet" href="assets/css/durandal.css" type="text/css"/>
+        <link rel="stylesheet" href="assets/css/app.css" type="text/css"/>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="viewport" content="width=device-width" />
+    </head>
+    <body>
+        <div id="applicationHost"></div>
+
+        <script type="text/javascript" src="vendor/jquery.js"></script>
+        <script type="text/javascript" src="vendor/knockout.js"></script>
+        <script type="text/javascript" src="vendor/sammy.js"></script>
+        <script type="text/javascript" src="vendor/require.js" data-main="app/main"></script>
+    </body>
+</html>
