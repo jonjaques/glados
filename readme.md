@@ -1,4 +1,4 @@
-# Voyager
+# Glados
 MVVM Framework
 
 ## Durandal Fork
