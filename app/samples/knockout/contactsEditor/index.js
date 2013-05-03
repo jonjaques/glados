@@ -1,4 +1,4 @@
-﻿define(['durandal/system', 'durandal/app'], function(system, app) {
+﻿define(['core/system', 'core/app'], function(system, app) {
 
     var initialData = [
       {

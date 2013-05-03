@@ -1,4 +1,4 @@
-﻿define(['durandal/app'], function(app) {
+﻿define(['core/app'], function(app) {
 
     // Some of the Knockout examples use this data
     return sampleProductCategories = [

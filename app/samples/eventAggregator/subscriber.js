@@ -1,5 +1,5 @@
-﻿define(['durandal/app'], function (app) {
-    
+﻿define(['core/app'], function (app) {
+
     return {
         received: ko.observableArray([]),
         subscription:ko.observable(),

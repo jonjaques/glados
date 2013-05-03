@@ -1,5 +1,5 @@
-﻿define(['durandal/app'], function (app) {
-        
+﻿define(['core/app'], function (app) {
+
         var firstName = ko.observable("Planet");
         var lastName = ko.observable("Earth");
 

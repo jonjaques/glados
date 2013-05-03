@@ -1,5 +1,5 @@
-﻿define(['./project', 'durandal/viewModel'], function (Project, viewModel) {
-    
+﻿define(['./project', 'core/viewModel'], function (Project, viewModel) {
+
     var projects = ko.observableArray([
         new Project('Durandal', 'A cross-device, cross-platform application framework written in JavaScript, Durandal is a very small amount of code built on top of three existing and established Javascript libraries: jQuery, Knockout and RequireJS.'),
         new Project('UnityDatabinding', 'A general databinding framework for Unity3D. Includes bindings for UI composition and samples for the NGUI library.'),
@@ -8,6 +8,6 @@
 
     return {
         projects: projects,
-        activeProject: viewModel.activator().forItems(projects)        
+        activeProject: viewModel.activator().forItems(projects)
     };
 });

@@ -1,4 +1,4 @@
-﻿define(['durandal/system', 'durandal/app'], function(system, app) {
+﻿define(['core/system', 'core/app'], function(system, app) {
 
     // Define a "Person" class that tracks its own name and children, and has a method to add a new child
     var Person = function (name, children) {

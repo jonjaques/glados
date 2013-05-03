@@ -1,7 +1,4 @@
-﻿define(function () {
-    var system = require('durandal/system'),
-        viewModel = require('durandal/viewModel');
-    
+﻿define(['core/system', 'core/viewModel'], function (system, viewModel) {
     return {
         activeSample:viewModel.activator(),
         introSamples: [{

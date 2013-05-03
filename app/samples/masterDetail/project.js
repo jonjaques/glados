@@ -1,10 +1,10 @@
-﻿define(['durandal/system', 'durandal/app'], function(system, app) {
-    
+﻿define(['core/system', 'core/app'], function(system, app) {
+
     var ctor = function(name, description) {
         this.name = name;
         this.description = description;
     };
-    
+
     ctor.prototype.canActivate = function () {
         return app.showMessage('Do you want to view ' + this.name + '?', 'Master Detail', ['Yes', 'No']);
     };

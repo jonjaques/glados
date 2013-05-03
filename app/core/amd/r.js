@@ -14893,7 +14893,7 @@ define('uglifyjs2', ['exports', 'source-map', 'logger'], function (exports, MOZ_
                   case "do":
                     return new AST_Do({
                         body: in_loop(statement),
-                        condition: (expect_token("keyword", "while"), tmp = parenthesised(), semicolon(), 
+                        condition: (expect_token("keyword", "while"), tmp = parenthesised(), semicolon(),
                         tmp)
                     });
 
@@ -14915,7 +14915,7 @@ define('uglifyjs2', ['exports', 'source-map', 'logger'], function (exports, MOZ_
                   case "return":
                     if (S.in_function == 0) croak("'return' outside of function");
                     return new AST_Return({
-                        value: is("punc", ";") ? (next(), null) : can_insert_semicolon() ? null : (tmp = expression(true), 
+                        value: is("punc", ";") ? (next(), null) : can_insert_semicolon() ? null : (tmp = expression(true),
                         semicolon(), tmp)
                     });
 

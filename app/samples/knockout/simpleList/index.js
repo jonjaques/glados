@@ -1,5 +1,5 @@
-﻿define(['durandal/app'], function (app) {
-        
+﻿define(['core/app'], function (app) {
+
         var initialData = ["Alpha", "Beta", "Gamma"];
 
         var items = ko.observableArray(initialData);

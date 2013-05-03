@@ -1,5 +1,5 @@
-﻿define(['durandal/plugins/router'], function (router) {
-    
+﻿define(['core/plugins/router'], function (router) {
+
     return {
         router: router,
         activate: function () {
@@ -13,7 +13,7 @@
                 { url: 'knockout-samples/:name', moduleId: 'samples/knockout/index', name: 'Knockout Samples' },
                 { url: 'knockout-samples', moduleId: 'samples/knockout/index', name: 'Knockout Samples', visible: true }
             ]);
-            
+
             return router.activate('hello');
         }
     };

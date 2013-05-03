@@ -1,4 +1,4 @@
-﻿define(['durandal/app'],
+﻿define(['core/app'],
 
     function (app) {
 

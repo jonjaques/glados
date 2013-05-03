@@ -1,5 +1,5 @@
-﻿define(['durandal/app'], function (app) {
-    
+﻿define(['core/app'], function (app) {
+
     var message = ko.observable();
     var canPublish = ko.computed(function () {
         return message() ? true : false;

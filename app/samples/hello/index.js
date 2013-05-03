@@ -1,5 +1,5 @@
-﻿define(['durandal/app'], function (app) {
-    
+﻿define(['core/app'], function (app) {
+
     var name = ko.observable();
     var canSayHello = ko.computed(function () {
         return name() ? true : false;
