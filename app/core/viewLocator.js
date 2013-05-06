@@ -17,10 +17,19 @@ define(['./system', './viewEngine'],
 	}
 
 	return {
-		useConvention: function(modulesPath, viewsPath, areasPath) {
-			modulesPath = modulesPath || 'viewmodels';
-			viewsPath = viewsPath || 'views';
-			areasPath = areasPath || viewsPath;
+		useConvention: function(options) {
+
+			var defaults = {
+				modules: 'viewmodels',
+				view: 'views',
+				areas: 'views'
+			};
+
+			var o = $.extend(defaults, options)
+
+			modulesPath = o.modules;
+			viewsPath = o.views;
+			areasPath = o.areas;
 
 			var reg = new RegExp(escape(modulesPath), 'gi');
 
