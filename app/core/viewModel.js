@@ -2,7 +2,7 @@
 	var viewModel;
 
 	function ensureSettings(settings) {
-		if (settings == undefined) {
+		if (settings === undefined) {
 			settings = {};
 		}
 
@@ -124,11 +124,11 @@
 				dfd.resolve(true);
 			}
 		}).promise();
-	};
+	}
 
 	function canActivateItem(newItem, activeItem, settings, activationData) {
 		return system.defer(function (dfd) {
-			if (newItem == activeItem()) {
+			if (newItem === activeItem()) {
 				dfd.resolve(true);
 				return;
 			}
@@ -157,7 +157,7 @@
 				dfd.resolve(true);
 			}
 		}).promise();
-	};
+	}
 
 	function createActivator(initialActiveItem, settings) {
 		var activeItem = ko.observable(null);
@@ -317,7 +317,7 @@
 			settings.determineNextItemToActivate = function (list, lastIndex) {
 				var toRemoveAt = lastIndex - 1;
 
-				if (toRemoveAt == -1 && list.length > 1) {
+				if (toRemoveAt === -1 && list.length > 1) {
 					return list[1];
 				}
 
@@ -336,7 +336,7 @@
 				} else {
 					var index = items.indexOf(newItem);
 
-					if (index == -1) {
+					if (index === -1) {
 						items.push(newItem);
 					} else {
 						newItem = items()[index];
@@ -357,27 +357,23 @@
 				if (close) {
 					return system.defer(function (dfd) {
 						var list = items();
-						var results = [];
 
 						function finish() {
-							for (var j = 0; j < results.length; j++) {
-								if (!results[j]) {
+							for (var j = 0; j < arguments.length; j++) {
+								if (!arguments[j]) {
 									dfd.resolve(false);
 									return;
 								}
 							}
-
 							dfd.resolve(true);
 						}
 
+						var dfds = [];
 						for (var i = 0; i < list.length; i++) {
-							computed.canDeactivateItem(list[i], close).then(function (result) {
-								results.push(result);
-								if (results.length == list.length) {
-									finish();
-								}
-							});
+							dfds.push(computed.canDeactivateItem(list[i], close));
 						}
+
+						$.when.apply($, dfds).done(finish);
 					}).promise();
 				} else {
 					return originalCanDeactivate();
@@ -396,7 +392,7 @@
 							computed.deactivateItem(item, close).then(function () {
 								results++;
 								items.remove(item);
-								if (results == listLength) {
+								if (results === listLength) {
 									dfd.resolve();
 								}
 							});
@@ -421,15 +417,15 @@
 		defaults: {
 			closeOnDeactivate: true,
 			interpretResponse: function (value) {
-				if (typeof value == 'string') {
+				if (typeof value === 'string') {
 					var lowered = value.toLowerCase();
-					return lowered == 'yes' || lowered == 'ok';
+					return lowered === 'yes' || lowered === 'ok';
 				}
 
 				return value;
 			},
 			areSameItem: function (currentItem, newItem, activationData) {
-				return currentItem == newItem;
+				return currentItem === newItem;
 			},
 			beforeActivate: function (newItem) {
 				return newItem;

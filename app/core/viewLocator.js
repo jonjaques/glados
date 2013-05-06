@@ -1,11 +1,12 @@
-﻿define(['./system', './viewEngine'],
+﻿/* jshint -W049 */
+define(['./system', './viewEngine'],
 	function (system, viewEngine) {
 
 	function findInElements(nodes, url) {
 		for (var i = 0; i < nodes.length; i++) {
 			var current = nodes[i];
 			var existingUrl = current.getAttribute('data-view');
-			if (existingUrl == url) {
+			if (existingUrl === url) {
 				return current;
 			}
 		}
@@ -28,7 +29,7 @@
 			};
 
 			this.translateViewIdToArea = function (viewId, area) {
-				if (!area || area == 'partial') {
+				if (!area || area === 'partial') {
 					return areasPath + '/' + viewId;
 				}
 

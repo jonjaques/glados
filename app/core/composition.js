@@ -5,8 +5,8 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 			activeViewAttributeName = 'data-active-view';
 
 	function shouldPerformActivation(settings) {
-		return settings.model && settings.model.activate
-			&& ((composition.activateDuringComposition && settings.activate == undefined) || settings.activate);
+		return settings.model && settings.model.activate &&
+			((composition.activateDuringComposition && settings.activate === undefined) || settings.activate);
 	}
 
 	function tryActivate(settings, successCallback) {
@@ -31,7 +31,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 		var child = ko.virtualElements.firstChild(parent);
 
 		while (child) {
-			if (child.nodeType == 1) {
+			if (child.nodeType === 1) {
 				elements.push(child);
 				if (child.getAttribute(activeViewAttributeName)) {
 					state.activeView = child;
@@ -65,9 +65,9 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 	}
 
 	function shouldTransition(newChild, settings) {
-		if (typeof settings.transition == 'string') {
+		if (typeof settings.transition === 'string') {
 			if (settings.activeView) {
-				if (settings.activeView == newChild) {
+				if (settings.activeView === newChild) {
 					return false;
 				}
 
@@ -78,7 +78,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 				if (settings.skipTransitionOnSameViewId) {
 					var currentViewId = settings.activeView.getAttribute('data-view');
 					var newViewId = newChild.getAttribute('data-view');
-					return currentViewId != newViewId;
+					return currentViewId !== newViewId;
 				}
 			}
 
@@ -105,7 +105,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 					});
 				});
 			} else {
-				if (newChild != settings.activeView) {
+				if (newChild !== settings.activeView) {
 					if (settings.cacheViews && settings.activeView) {
 						$(settings.activeView).css('display', 'none');
 					}
@@ -134,7 +134,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 		},
 		bindAndShow: function (element, view, settings) {
 			if (settings.cacheViews) {
-				settings.composingNewView = (ko.utils.arrayIndexOf(settings.viewElements, view) == -1);
+				settings.composingNewView = (ko.utils.arrayIndexOf(settings.viewElements, view) === -1);
 			} else {
 				settings.composingNewView = true;
 			}
@@ -152,7 +152,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 					var modelToBind = settings.model || dummyModel;
 					var currentModel = ko.dataFor(view);
 
-					if (currentModel != modelToBind) {
+					if (currentModel !== modelToBind) {
 						if (!settings.composingNewView) {
 							$(view).remove();
 							viewEngine.createView(view.getAttribute('data-view')).then(function(recreatedView) {
@@ -173,7 +173,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 		getSettings: function (valueAccessor, element) {
 			var value = ko.utils.unwrapObservable(valueAccessor()) || {};
 
-			if (typeof value == 'string') {
+			if (typeof value === 'string') {
 				return value;
 			}
 
@@ -216,7 +216,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 				settings.strategy = this.defaultStrategy;
 			}
 
-			if (typeof settings.strategy == 'string') {
+			if (typeof settings.strategy === 'string') {
 				system.acquire(settings.strategy).then(function (strategy) {
 					settings.strategy = strategy;
 					composition.executeStrategy(element, settings);
@@ -226,7 +226,7 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 			}
 		},
 		compose: function (element, settings, bindingContext) {
-			if (typeof settings == 'string') {
+			if (typeof settings === 'string') {
 				if (viewEngine.isViewUrl(settings)) {
 					settings = {
 						view: settings
@@ -265,10 +265,11 @@ function (viewLocator, viewModelBinder, viewEngine, system, viewModel) {
 						composition.bindAndShow(element, view, settings);
 					});
 				}
-			} else if (typeof settings.model == 'string') {
+			} else if (typeof settings.model === 'string') {
 				system.acquire(settings.model).then(function (module) {
-					if (typeof (module) == 'function') {
-						settings.model = new module(element, settings);
+					var Module = typeof (module) === 'function' ? module : false;
+					if (Module) {
+						settings.model = new Module(element, settings);
 					} else {
 						settings.model = module;
 					}

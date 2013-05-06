@@ -5,10 +5,10 @@
 			return $.ajax(url, { data: query });
 		},
 		jsonp: function (url, query, callbackParam) {
-			if (url.indexOf('=?') == -1) {
+			if (url.indexOf('=?') === -1) {
 				callbackParam = callbackParam || this.defaultJSONPCallbackParam;
 
-				if (url.indexOf('?') == -1) {
+				if (url.indexOf('?') === -1) {
 					url += '?';
 				} else {
 					url += '&';

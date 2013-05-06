@@ -38,11 +38,11 @@
 		getSettings: function(valueAccessor) {
 			var value = ko.utils.unwrapObservable(valueAccessor()) || {};
 
-			if (typeof value == 'string') {
+			if (typeof value === 'string') {
 				return value;
 			} else {
 				for (var attrName in value) {
-					if (ko.utils.arrayIndexOf(bindableSettings, attrName) != -1) {
+					if (ko.utils.arrayIndexOf(bindableSettings, attrName) !== -1) {
 						value[attrName] = ko.utils.unwrapObservable(value[attrName]);
 					} else {
 						value[attrName] = value[attrName];
@@ -104,7 +104,7 @@
 			return settings;
 		},
 		create: function (element, settings, bindingContext) {
-			if (typeof settings == 'string') {
+			if (typeof settings === 'string') {
 				settings = {
 					kind: settings
 				};

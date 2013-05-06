@@ -51,7 +51,7 @@
 
 		if (previousRoute || !routeAttempted) {
 			tryActivateRouter();
-		} else if (routeAttempted != navigationDefaultRoute) {
+		} else if (routeAttempted !== navigationDefaultRoute) {
 			window.location.replace("#/" + navigationDefaultRoute);
 		} else {
 			tryActivateRouter();
@@ -79,7 +79,7 @@
 	}
 
 	function shouldStopNavigation() {
-		return cancelling || (sammy.last_location[1].replace('/', '') == previousRoute);
+		return cancelling || (sammy.last_location[1].replace('/', '') === previousRoute);
 	}
 
 	function handleGuardedRoute(routeInfo, params, instance) {
@@ -88,7 +88,7 @@
 			if (resultOrPromise.then) {
 				resultOrPromise.then(function(result) {
 					if (result) {
-						if (typeof result == 'string') {
+						if (typeof result === 'string') {
 							redirect(result);
 						} else {
 							activateRoute(routeInfo, params, instance);
@@ -98,7 +98,7 @@
 					}
 				});
 			} else {
-				if (typeof resultOrPromise == 'string') {
+				if (typeof resultOrPromise === 'string') {
 					redirect(resultOrPromise);
 				} else {
 					activateRoute(routeInfo, params, instance);
@@ -184,7 +184,7 @@
 		if (router.autoConvertRouteToModuleId) {
 			var fragment = this.path.split('#/');
 
-			if (fragment.length == 2) {
+			if (fragment.length === 2) {
 				var parts = fragment[1].split('/');
 				route = parts[0];
 				params.splat = parts.splice(1);
@@ -204,7 +204,7 @@
 
 		if (routeInfo.visible) {
 			routeInfo.isActive = ko.computed(function () {
-				return ready() && activeItem() && activeItem().__moduleId__ == routeInfo.moduleId;
+				return ready() && activeItem() && activeItem().__moduleId__ === routeInfo.moduleId;
 			});
 
 			visibleRoutes.push(routeInfo);
@@ -228,14 +228,15 @@
 			}, 10);
 		},
 		getActivatableInstance: function (routeInfo, params, module) {
-			if (typeof module == 'function') {
-				return new module();
+			var Module = typeof module === 'function' ? module : false;
+			if (Module) {
+				return new Module();
 			} else {
 				return module;
 			}
 		},
 		useConvention: function (rootPath) {
-			rootPath = rootPath == null ? 'viewmodels' : rootPath;
+			rootPath = rootPath === null ? 'viewmodels' : rootPath;
 			if (rootPath) {
 				rootPath += '/';
 			}
@@ -286,7 +287,7 @@
 			var newUrl = url;
 			// find the hash using the url with parameters stripped
 			for (var route in routesByPath) {
-				if (router.stripParameter(routesByPath[route].url) == url) {
+				if (router.stripParameter(routesByPath[route].url) === url) {
 					newUrl = routesByPath[route].hash;
 					break;
 				}
@@ -336,7 +337,7 @@
 			};
 		},
 		mapNav: function (urlOrConfig, moduleId, name) {
-			if (typeof urlOrConfig == "string") {
+			if (typeof urlOrConfig === "string") {
 				return this.mapRoute(urlOrConfig, moduleId, name, true);
 			}
 
@@ -344,7 +345,7 @@
 			return configureRoute(urlOrConfig);
 		},
 		mapRoute: function (urlOrConfig, moduleId, name, visible) {
-			if (typeof urlOrConfig == "string") {
+			if (typeof urlOrConfig === "string") {
 					return configureRoute({
 						url: urlOrConfig,
 						moduleId: moduleId,
@@ -378,7 +379,7 @@
 				router.dfd = dfd;
 				navigationDefaultRoute = defaultRoute;
 
-				sammy = Sammy(function (route) {
+				sammy = new Sammy(function (route) {
 					var unwrapped = allRoutes();
 
 					for (var i = 0; i < unwrapped.length; i++) {

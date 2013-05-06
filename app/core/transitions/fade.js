@@ -3,6 +3,26 @@
 
 	var entrance = function(parent, newChild, settings) {
 		return system.defer(function(dfd) {
+
+			var $previousView = $(settings.activeView);
+			var duration = settings.duration || 500;
+			var fadeOnly = !!settings.fadeOnly;
+
+			function startTransition() {
+				scrollIfNeeded();
+
+				if (settings.cacheViews) {
+					if (settings.composingNewView) {
+						ko.virtualElements.prepend(parent, newChild);
+					}
+				} else {
+					ko.virtualElements.emptyNode(parent);
+					ko.virtualElements.prepend(parent, newChild);
+				}
+
+				$(newChild).fadeIn(duration, endTransition);
+			}
+
 			function endTransition() {
 				dfd.resolve();
 			}
@@ -30,25 +50,6 @@
 					endTransition();
 				}
 			} else {
-				var $previousView = $(settings.activeView);
-				var duration = settings.duration || 500;
-				var fadeOnly = !!settings.fadeOnly;
-
-				function startTransition() {
-					scrollIfNeeded();
-
-					if (settings.cacheViews) {
-						if (settings.composingNewView) {
-							ko.virtualElements.prepend(parent, newChild);
-						}
-					} else {
-						ko.virtualElements.emptyNode(parent);
-						ko.virtualElements.prepend(parent, newChild);
-					}
-
-					$(newChild).fadeIn(duration, endTransition);
-				}
-
 				if ($previousView.length) {
 					$previousView.fadeOut(fadeOutDuration, startTransition);
 				} else {

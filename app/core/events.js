@@ -123,9 +123,9 @@ define(['./system'], function (system) {
 
 	Events.prototype.proxy = function(events) {
 		var that = this;
-		return (function(arg) {
+		return function(arg) {
 			that.trigger(events, arg);
-		});
+		};
 	};
 
 	Events.includeIn = function(targetObject) {

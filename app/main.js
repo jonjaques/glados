@@ -9,9 +9,12 @@ define(['core/app', 'core/system', 'core/viewLocator'],
 
     system.debug(true);
 
-    window.ARI = {};
-    ARI.app = app;
-    ARI.system = system;
+		var MyApp = {
+			app: app,
+			system: system
+		};
+
+    window.MyApp = window.MyApp || MyApp;
 
     app.title = 'Durandal Samples';
     app.start().then(function () {

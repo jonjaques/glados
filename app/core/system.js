@@ -4,11 +4,12 @@
 		hasOwnProperty = Object.prototype.hasOwnProperty,
 		toString = Object.prototype.toString,
 		system,
-		treatAsIE8 = false;
+		treatAsIE8 = false,
+		console = console ? console : undefined;
 
 	//see http://patik.com/blog/complete-cross-browser-console-log/
 	// Tell IE9 to use its built-in console
-	if (Function.prototype.bind && (typeof console === 'object' || typeof console === 'function') && typeof console.log == 'object') {
+	if (Function.prototype.bind && (typeof console === 'object' || typeof console === 'function') && typeof console.log === 'object') {
 		try {
 			['log', 'info', 'warn', 'error', 'assert', 'dir', 'clear', 'profile', 'profileEnd']
 				.forEach(function(method) {
@@ -46,7 +47,7 @@
 	var log = function() {
 		try {
 			// Modern browsers
-			if (typeof console != 'undefined' && typeof console.log == 'function') {
+			if (typeof console !== 'undefined' && typeof console.log === 'function') {
 				// Opera 11
 				if (window.opera) {
 					var i = 0;
@@ -56,14 +57,14 @@
 					}
 				}
 					// All other modern browsers
-				else if ((Array.prototype.slice.call(arguments)).length == 1 && typeof Array.prototype.slice.call(arguments)[0] == 'string') {
+				else if ((Array.prototype.slice.call(arguments)).length === 1 && typeof Array.prototype.slice.call(arguments)[0] === 'string') {
 					console.log((Array.prototype.slice.call(arguments)).toString());
 				} else {
 					console.log(Array.prototype.slice.call(arguments));
 				}
 			}
 				// IE8
-			else if ((!Function.prototype.bind || treatAsIE8) && typeof console != 'undefined' && typeof console.log == 'object') {
+			else if ((!Function.prototype.bind || treatAsIE8) && typeof console !== 'undefined' && typeof console.log === 'object') {
 				Function.prototype.call.call(console.log, console, Array.prototype.slice.call(arguments));
 			}
 
@@ -83,11 +84,11 @@
 				return null;
 			}
 
-			if (typeof obj == 'function') {
+			if (typeof obj === 'function') {
 				return obj.prototype.__moduleId__;
 			}
 
-			if (typeof obj == 'string') {
+			if (typeof obj === 'string') {
 				return null;
 			}
 
@@ -98,19 +99,19 @@
 				return;
 			}
 
-			if (typeof obj == 'function') {
+			if (typeof obj === 'function') {
 				obj.prototype.__moduleId__ = id;
 				return;
 			}
 
-			if (typeof obj == 'string') {
+			if (typeof obj === 'string') {
 				return;
 			}
 
 			obj.__moduleId__ = id;
 		},
 		debug: function(enable) {
-			if (arguments.length == 1) {
+			if (arguments.length === 1) {
 				isDebugging = enable;
 				if (isDebugging) {
 					this.log = log;
@@ -135,7 +136,7 @@
 		},
 		guid: function() {
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-				var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+				var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
 				return v.toString(16);
 			});
 		},

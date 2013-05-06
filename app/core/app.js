@@ -1,10 +1,10 @@
 ﻿define(['./system', './viewEngine', './composition', './widget', './modalDialog', './events'],
-  function(system, viewEngine, composition, widget, modalDialog, Events) {
+	function(system, viewEngine, composition, widget, modalDialog, Events) {
 
-  var app = {
+	var app = {
 		title: 'Application',
 		showModal: function(obj, activationData, context) {
-	  	return modalDialog.show(obj, activationData, context);
+			return modalDialog.show(obj, activationData, context);
 		},
 		showMessage: function(message, title, options) {
 			return modalDialog.show('./messageBox', {
@@ -30,7 +30,7 @@
 		setRoot: function(root, transition, applicationHost) {
 			var hostElement, settings = { activate: true, transition: transition };
 
-			if (!applicationHost || typeof applicationHost == "string") {
+			if (!applicationHost || typeof applicationHost === "string") {
 				hostElement = document.getElementById(applicationHost || 'applicationHost');
 			} else {
 				hostElement = applicationHost;
@@ -49,13 +49,13 @@
 			composition.compose(hostElement, settings);
 		},
 		adaptToDevice: function() {
-		  document.ontouchmove = function (event) {
-	      event.preventDefault();
-		  };
+			document.ontouchmove = function (event) {
+				event.preventDefault();
+			};
 		}
-  };
+	};
 
-  Events.includeIn(app);
+	Events.includeIn(app);
 
-  return app;
+	return app;
 });

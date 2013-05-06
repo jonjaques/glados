@@ -25,7 +25,7 @@
 		},
 		parseMarkup: function (markup) {
 			var allElements = parseMarkupCore(markup);
-			if (allElements.length == 1) {
+			if (allElements.length === 1) {
 				return allElements[0];
 			}
 
@@ -33,8 +33,8 @@
 
 			for (var i = 0; i < allElements.length; i++) {
 				var current = allElements[i];
-				if (current.nodeType != 8) {
-					if (current.nodeType == 3) {
+				if (current.nodeType !== 8) {
+					if (current.nodeType === 3) {
 						var result = /\S/.test(current.nodeValue);
 						if (!result) {
 							continue;

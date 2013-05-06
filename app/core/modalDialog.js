@@ -6,10 +6,11 @@
 
 	function ensureModalInstance(objOrModuleId) {
 		return system.defer(function(dfd) {
-			if (typeof objOrModuleId == "string") {
+			if (typeof objOrModuleId === "string") {
 				system.acquire(objOrModuleId).then(function(module) {
-					if (typeof(module) == 'function') {
-						dfd.resolve(new module());
+					var Module = typeof module === 'function' ? module : false;
+					if (Module) {
+						dfd.resolve(new Module());
 					} else {
 						dfd.resolve(module);
 					}
@@ -94,7 +95,7 @@
 	};
 
 	modalDialog.addContext('default', {
-		blockoutOpacity: .2,
+		blockoutOpacity: 0.2,
 		removeDelay: 200,
 		addHost: function(modal) {
 			var body = $('body');
@@ -117,7 +118,7 @@
 				var oldScrollTop = html.scrollTop();
 				$("html").css("overflow-y", "hidden");
 				var newBodyOuterWidth = $("body").outerWidth(true);
-				body.css("margin-right", (newBodyOuterWidth - oldBodyOuterWidth + parseInt(modal.oldBodyMarginRight)) + "px");
+				body.css("margin-right", (newBodyOuterWidth - oldBodyOuterWidth + parseInt(modal.oldBodyMarginRight, 10)) + "px");
 				html.scrollTop(oldScrollTop); // necessary for Firefox
 				$("#simplemodal-overlay").css("width", newBodyOuterWidth + "px");
 			}
