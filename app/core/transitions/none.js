@@ -1,4 +1,9 @@
-define(['../system'], function(system) {
+define([
+	'jquery',
+	'knockout',
+	'../system'
+],
+function($, ko, system) {
 	var fadeOutDuration = 100;
 
 	var entrance = function(parent, newChild, settings) {

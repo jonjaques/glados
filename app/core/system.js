@@ -1,11 +1,11 @@
-﻿define(['require'], function (require) {
+﻿/* global console: true */
+define(['require', 'jquery'], function (require, $) {
 	var isDebugging = false,
 		nativeKeys = Object.keys,
 		hasOwnProperty = Object.prototype.hasOwnProperty,
 		toString = Object.prototype.toString,
 		system,
-		treatAsIE8 = false,
-		console = console ? console : undefined;
+		treatAsIE8 = false;
 
 	//see http://patik.com/blog/complete-cross-browser-console-log/
 	// Tell IE9 to use its built-in console
@@ -56,11 +56,13 @@
 						i++;
 					}
 				}
-					// All other modern browsers
-				else if ((Array.prototype.slice.call(arguments)).length === 1 && typeof Array.prototype.slice.call(arguments)[0] === 'string') {
-					console.log((Array.prototype.slice.call(arguments)).toString());
-				} else {
-					console.log(Array.prototype.slice.call(arguments));
+				// else if ((Array.prototype.slice.call(arguments)).length === 1 && typeof Array.prototype.slice.call(arguments)[0] === 'string') {
+				// 	console.log((Array.prototype.slice.call(arguments)).toString());
+				// }
+
+				// All other modern browsers
+				else {
+					console.log.apply(console, arguments);
 				}
 			}
 				// IE8

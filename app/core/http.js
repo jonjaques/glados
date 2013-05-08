@@ -1,4 +1,4 @@
-﻿define(function() {
+﻿define(['jquery'], function($) {
 	return {
 		defaultJSONPCallbackParam:'callback',
 		get:function(url, query) {

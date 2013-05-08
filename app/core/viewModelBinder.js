@@ -1,4 +1,4 @@
-﻿define(['./system'], function (system) {
+﻿define(['knockout', './system'], function (ko, system) {
 	var viewModelBinder;
 	var insufficientInfoMessage = 'Insufficient Information to Bind';
 	var unexpectedViewMessage = 'Unexpected View Type';

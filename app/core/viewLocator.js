@@ -1,6 +1,6 @@
 ﻿/* jshint -W049 */
-define(['./system', './viewEngine'],
-	function (system, viewEngine) {
+define(['jquery', './system', './viewEngine'],
+function ($, system, viewEngine) {
 
 	function findInElements(nodes, url) {
 		for (var i = 0; i < nodes.length; i++) {
@@ -23,15 +23,15 @@ define(['./system', './viewEngine'],
 				modules: 'viewmodels',
 				view: 'views',
 				areas: 'views'
-			};
+			},
 
-			var o = $.extend(defaults, options)
+			o = $.extend(defaults, options),
 
-			modulesPath = o.modules;
-			viewsPath = o.views;
-			areasPath = o.areas;
+			modulesPath = o.modules,
+			viewsPath = o.views,
+			areasPath = o.areas,
 
-			var reg = new RegExp(escape(modulesPath), 'gi');
+			reg = new RegExp(escape(modulesPath), 'gi');
 
 			this.convertModuleIdToViewId = function (moduleId) {
 				return moduleId.replace(reg, viewsPath);

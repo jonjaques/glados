@@ -1,4 +1,4 @@
-﻿define(['core/app'], function (app) {
+﻿define(['knockout', 'core/app'], function (ko, app) {
 
     var name = ko.observable();
     var canSayHello = ko.computed(function () {

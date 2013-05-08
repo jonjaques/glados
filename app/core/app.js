@@ -1,5 +1,14 @@
-﻿define(['./system', './viewEngine', './composition', './widget', './modalDialog', './events'],
-	function(system, viewEngine, composition, widget, modalDialog, Events) {
+﻿define([
+	'jquery',
+	'knockout',
+	'./system',
+	'./viewEngine',
+	'./composition',
+	'./widget',
+	'./modalDialog',
+	'./events'
+],
+function($, ko, system, viewEngine, composition, widget, modalDialog, Events) {
 
 	var app = {
 		title: 'Application',
