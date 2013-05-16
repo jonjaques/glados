@@ -58,9 +58,9 @@ module.exports = function(grunt) {
 		requirejs: {
 			release: {
 				options: {
-					appDir: './src/app',
+					appDir: './src',
 					mainConfigFile: './src/app/bootstrap.js',
-					baseUrl: './src',
+					baseUrl: './app',
 					dir: './dist',
 					name: 'main',
 					removeCombined: true
