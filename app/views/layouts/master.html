@@ -1,0 +1,9 @@
+<h1>Ze master layout</h1>
+<h2>Ze page container</h2>
+
+<div class="container-fluid page-host" data-bind="compose: {
+	model: router.activeRoute, 						// wiring the router
+	afterCompose: router.afterCompose, 		// wiring the router
+	transition: 'none', 							// use the 'entrance' transition when switching views
+	cacheViews: true 											// telling composition to keep views in the dom, and reuse them (only a good idea with singleton view models)
+}"></div>
