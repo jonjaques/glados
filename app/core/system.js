@@ -81,6 +81,7 @@ define(['require', 'jquery'], function (require, $) {
 	system = {
 		version:"1.2.0",
 		noop: noop,
+		plugins: {},
 		getModuleId: function(obj) {
 			if (!obj) {
 				return null;
@@ -135,6 +136,18 @@ define(['require', 'jquery'], function (require, $) {
 		error: noop,
 		defer: function(action) {
 			return $.Deferred(action);
+		},
+		use: function() {
+			var plugins = [].concat.apply(Array.prototype.concat, arguments);
+			for (var i = 0, len = plugins.length; i < len; i++) {
+				if (plugins[i] && plugins[i].pluginInit) {
+					if (plugins[i].__moduleId__) {
+						system.log('Initializing plugin: '+ plugins[i].__moduleId__);
+					}
+					plugins[i].pluginInit.call(plugins[i], system, system.plugins);
+				}
+			}
+			return system;
 		},
 		guid: function() {
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
