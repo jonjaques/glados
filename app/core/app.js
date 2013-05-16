@@ -28,13 +28,21 @@ function($, ko, system, viewEngine, composition, widget, modalDialog, Events) {
 				document.title = that.title;
 			}
 
-			return system.defer(function (dfd) {
+			return system.defer(function(dfd) {
 				$(function() {
 					system.log('Starting Application');
 					dfd.resolve();
 					system.log('Started Application');
 				});
 			}).promise();
+		},
+		use: function(plugin) {
+			if (plugin && plugin.initialize) {
+				plugin.initialize.call(app, system);
+			} else {
+				throw new Error('No plugin specified');
+			}
+			return app;
 		},
 		setRoot: function(root, transition, applicationHost) {
 			var hostElement, settings = { activate: true, transition: transition };
