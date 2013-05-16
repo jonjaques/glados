@@ -24,8 +24,7 @@ module.exports = function(grunt) {
 			src: [
 				'Gruntfile.js',
 				'app/**/*.js',
-				'!app/core/amd/**/*.js',
-				'!app/samples/**/*.js'
+				'!app/core/samples/**/*.js'
 			],
 			options: {
 				// stricter warnings
@@ -51,14 +50,7 @@ module.exports = function(grunt) {
 				globals: {
 					'define': true,
 					'require': true,
-					'requirejs': true,
-					'ko': true,
-					'sammy': true,
-					'Backbone': true,
-					'_': true,
-					'$': true,
-					'jQuery': true,
-					'Sammy': true
+					'requirejs': true
 				}
 			}
 		},
@@ -67,6 +59,7 @@ module.exports = function(grunt) {
 			release: {
 				options: {
 					appDir: 'app',
+					mainConfigFile: './app/bootstrap.js',
 					baseUrl: './',
 					dir: 'build',
 					name: 'main',
