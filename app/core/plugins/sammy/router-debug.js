@@ -1,7 +1,13 @@
-﻿define(['../system', '../viewModel', '../app'], function (system, viewModel, app) {
+﻿define([
+	'sammy',
+	'knockout',
+	'../../system',
+	'../../viewModel',
+	'../../app'
+], function (Sammy, ko, system, viewModel, app) {
 
-	//NOTE: Sammy.js is not required by the core of Durandal.
-	//However, this plugin leverages it to enable navigation.
+	// Note: Sammy.js is not required by the core of Glados.
+	// However, this plugin leverages it to enable navigation.
 
 	var routesByPath = {},
 		allRoutes = ko.observableArray([]),
@@ -20,6 +26,7 @@
 		skipRouteUrl;
 
 	var tryActivateRouter = function () {
+		system.log('router#tryActivateRouter', arguments);
 		tryActivateRouter = system.noop;
 		ready(true);
 		router.dfd.resolve();
@@ -31,6 +38,7 @@
 	};
 
 	function redirect(url) {
+		system.log('router#redirect', arguments);
 		isNavigating(false);
 		system.log('Redirecting');
 		router.navigateTo(url);
@@ -38,7 +46,7 @@
 
 	function cancelNavigation() {
 		cancelling = true;
-		system.log('Cancelling Navigation');
+		system.log('router#cancelNavigation', arguments);
 
 		if (previousRoute) {
 			sammy.setLocation(previousRoute);
@@ -59,6 +67,7 @@
 	}
 
 	function completeNavigation(routeInfo, params, module) {
+		system.log('router#completeNavigation', arguments);
 		activeRoute(routeInfo);
 		router.onNavigationComplete(routeInfo, params, module);
 		previousModule = module;
@@ -67,8 +76,7 @@
 	}
 
 	function activateRoute(routeInfo, params, module) {
-		system.log('Activating Route', routeInfo, module, params);
-
+		system.log('router#activateRoute', arguments);
 		activeItem.activateItem(module, params).then(function (succeeded) {
 			if (succeeded) {
 				completeNavigation(routeInfo, params, module);
@@ -79,10 +87,12 @@
 	}
 
 	function shouldStopNavigation() {
+		system.log('router#shouldStopNavigation', arguments);
 		return cancelling || (sammy.last_location[1].replace('/', '') === previousRoute);
 	}
 
 	function handleGuardedRoute(routeInfo, params, instance) {
+		system.log('router#handleGuardedRoute', arguments);
 		var resultOrPromise = router.guardRoute(routeInfo, params, instance);
 		if (resultOrPromise) {
 			if (resultOrPromise.then) {
@@ -113,9 +123,12 @@
 		if (isNavigating()) {
 			return;
 		}
+		system.log('router#dequeueRoute.isNavigating', !!isNavigating());
 
 		var next = queue.shift();
 		queue = [];
+
+		system.log('router#dequeueRoute.next', !!next);
 
 		if (!next) {
 			return;
@@ -138,6 +151,7 @@
 	}
 
 	function queueRoute(routeInfo, params) {
+		system.log('router#queueRoute', arguments);
 		queue.unshift({
 			routeInfo: routeInfo,
 			params: params
@@ -147,6 +161,7 @@
 	}
 
 	function ensureRoute(route, params) {
+		system.log('router#ensureRoute', arguments);
 		var routeInfo = routesByPath[route];
 
 		if (shouldStopNavigation()) {
@@ -171,14 +186,17 @@
 	}
 
 	function handleDefaultRoute() {
+		system.log('router#handleDefaultRoute', arguments);
 		ensureRoute(navigationDefaultRoute, this.params || {});
 	}
 
 	function handleMappedRoute() {
+		system.log('router#handleMappedRoute', arguments);
 		ensureRoute(this.app.last_route.path.toString(), this.params || {});
 	}
 
 	function handleWildCardRoute() {
+		system.log('router#handleWildCardRoute', arguments);
 		var params = this.params || {}, route;
 
 		if (router.autoConvertRouteToModuleId) {
@@ -197,6 +215,7 @@
 	}
 
 	function configureRoute(routeInfo) {
+		system.log('router#configureRoute', arguments);
 		router.prepareRouteInfo(routeInfo);
 
 		routesByPath[routeInfo.url.toString()] = routeInfo;
@@ -213,7 +232,7 @@
 		return routeInfo;
 	}
 
-	return router = {
+	return window.Router = router = {
 		ready: ready,
 		allRoutes: allRoutes,
 		visibleRoutes: visibleRoutes,
@@ -221,6 +240,7 @@
 		activeItem: activeItem,
 		activeRoute: activeRoute,
 		afterCompose: function () {
+			system.log('router#afterCompose', arguments);
 			setTimeout(function () {
 				isNavigating(false);
 				dequeueRoute();
@@ -228,6 +248,7 @@
 			}, 10);
 		},
 		getActivatableInstance: function (routeInfo, params, module) {
+			system.log('router#getActivatableInstance', arguments);
 			var Module = typeof module === 'function' ? module : false;
 			if (Module) {
 				return new Module();
@@ -236,6 +257,7 @@
 			}
 		},
 		useConvention: function (rootPath) {
+			system.log('router#useConvention', arguments);
 			rootPath = rootPath === null ? 'viewmodels' : rootPath;
 			if (rootPath) {
 				rootPath += '/';
@@ -245,14 +267,17 @@
 			};
 		},
 		stripParameter: function (val) {
+			system.log('router#stripParameter', arguments);
 			var colonIndex = val.indexOf(':');
 			var length = colonIndex > 0 ? colonIndex - 1 : val.length;
 			return val.substring(0, length);
 		},
 		handleInvalidRoute: function (route, params) {
+			system.log('router#handleInvalidRoute', arguments);
 			system.log('No Route Found', route, params);
 		},
 		onNavigationComplete: function (routeInfo, params, module) {
+			system.log('router#onNavigationComplete', arguments);
 			if (app.title) {
 				document.title = routeInfo.caption + " | " + app.title;
 			} else {
@@ -260,9 +285,11 @@
 			}
 		},
 		navigateBack: function () {
+			system.log('router#navigateBack', arguments);
 			window.history.back();
 		},
 		navigateTo: function (url, option) {
+			system.log('router#navigateTo', arguments);
 			option = option || 'trigger';
 
 			switch (option.toLowerCase()) {
@@ -283,7 +310,7 @@
 			}
 		},
 		navigateToRoute: function (url, data) {
-
+			system.log('router#navigateToRoute', arguments);
 			var newUrl = url;
 			// find the hash using the url with parameters stripped
 			for (var route in routesByPath) {
@@ -309,16 +336,20 @@
 			sammy.setLocation(newUrl);
 		},
 		replaceLocation: function (url) {
+			system.log('router#replaceLocation', arguments);
 			this.navigateTo(url, 'replace');
 		},
 		convertRouteToName: function (route) {
+			system.log('router#convertRouteToName', arguments);
 			var value = router.stripParameter(route);
 			return value.substring(0, 1).toUpperCase() + value.substring(1);
 		},
 		convertRouteToModuleId: function (route) {
+			system.log('router#convertRouteToModuleId', arguments);
 			return router.stripParameter(route);
 		},
 		prepareRouteInfo: function (info) {
+			system.log('router#prepareRouteInfo', arguments);
 			if (!(info.url instanceof RegExp)) {
 				info.name = info.name || router.convertRouteToName(info.url);
 				info.moduleId = info.moduleId || router.convertRouteToModuleId(info.url);
@@ -329,6 +360,7 @@
 			info.settings = info.settings || {};
 		},
 		mapAuto: function (path) {
+			system.log('router#mapAuto', arguments);
 			path = path || 'viewmodels';
 			path += '/';
 
@@ -337,6 +369,7 @@
 			};
 		},
 		mapNav: function (urlOrConfig, moduleId, name) {
+			system.log('router#mapNav', arguments);
 			if (typeof urlOrConfig === "string") {
 				return this.mapRoute(urlOrConfig, moduleId, name, true);
 			}
@@ -345,6 +378,7 @@
 			return configureRoute(urlOrConfig);
 		},
 		mapRoute: function (urlOrConfig, moduleId, name, visible) {
+			system.log('router#mapRoute', arguments);
 			if (typeof urlOrConfig === "string") {
 					return configureRoute({
 						url: urlOrConfig,
@@ -357,6 +391,7 @@
 			}
 		},
 		map: function (routeOrRouteArray) {
+			system.log('router#map', arguments);
 			if (!system.isArray(routeOrRouteArray)) {
 				return configureRoute(routeOrRouteArray);
 			}
@@ -368,11 +403,13 @@
 			return configured;
 		},
 		deactivate: function () {
+			system.log('router#deactivate', arguments);
 			router.allRoutes.removeAll();
 			router.visibleRoutes.removeAll();
 			sammy && sammy.destroy();
 		},
 		activate: function (defaultRoute) {
+			system.log('router#activate', arguments);
 			return system.defer(function (dfd) {
 				var processedRoute;
 
@@ -381,6 +418,7 @@
 
 				sammy = new Sammy(function (route) {
 					var unwrapped = allRoutes();
+					system.log(unwrapped);
 
 					for (var i = 0; i < unwrapped.length; i++) {
 						var current = unwrapped[i];
