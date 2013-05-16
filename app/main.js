@@ -1,49 +1,28 @@
-﻿requirejs.config({
-	paths: {
-		'text': 'core/amd/text',
-		'vendor': '../vendor',
-		'knockout': '../vendor/knockout',
-		'backbone': '../vendor/backbone',
-		'underscore': '../vendor/underscore',
-		'jquery': '../vendor/jquery',
-		'sammy': '../vendor/sammy'
-	},
-	shim: {
-		'knockout': {
-			deps: ['jquery'],
-			exports: 'ko'
-		},
-		'backbone': {
-			deps: ['jquery', 'underscore'],
-			exports: 'Backbone'
-		},
-		'underscore': {
-			exports: '_'
-		},
-		'jquery': {
-			exports: '$'
-		},
-		'sammy': {
-			exports: 'Sammy'
-		}
-	}
-});
+﻿define([
+	'config',
+	'core/app',
+	'core/system',
+	'core/viewLocator',
+	'core/plugins/backbone/router',
+	'core/plugins/orm'
+],
+function (config, app, system, viewLocator, router, orm) {
 
-define(['core/app', 'core/system', 'core/viewLocator'],
-function (app, system, viewLocator) {
-	system.debug(true);
+	system.debug(config.debug);
+	system.use(router, orm);
 
-	var MyApp = {
-		app: app,
-		system: system
-	};
+	window.Glados = {};
+	Glados.app = app;
+	Glados.system = system;
 
-	window.MyApp = window.MyApp || MyApp;
+	app.title = 'Glados';
+	app.start()
+		.done(function () {
+			viewLocator.useConvention();
+			app.adaptToDevice();
+			app.setRoot('layout');
+		}).fail(function() {
+			app.recover();
+		});
 
-	app.title = 'Durandal Samples';
-	app.start().then(function () {
-		viewLocator.useConvention();
-		app.adaptToDevice();
-		app.setRoot('../layout');
-	});
 });
