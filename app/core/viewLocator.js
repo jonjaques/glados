@@ -21,28 +21,23 @@ function ($, system, viewEngine) {
 
 			var defaults = {
 				modules: 'viewmodels',
-				view: 'views',
+				views: 'views',
 				areas: 'views'
 			},
 
 			o = $.extend(defaults, options),
 
-			modulesPath = o.modules,
-			viewsPath = o.views,
-			areasPath = o.areas,
-
-			reg = new RegExp(escape(modulesPath), 'gi');
+			reg = new RegExp(escape(o.modules), 'gi');
 
 			this.convertModuleIdToViewId = function (moduleId) {
-				return moduleId.replace(reg, viewsPath);
+				return moduleId.replace(reg, o.views);
 			};
 
 			this.translateViewIdToArea = function (viewId, area) {
 				if (!area || area === 'partial') {
-					return areasPath + '/' + viewId;
+					return o.areas + '/' + viewId;
 				}
-
-				return areasPath + '/' + area + '/' + viewId;
+				return o.areas + '/' + area + '/' + viewId;
 			};
 		},
 		locateViewForObject: function(obj, elementsToSearch) {
