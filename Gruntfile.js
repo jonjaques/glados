@@ -23,8 +23,8 @@ module.exports = function(grunt) {
 		jshint: {
 			src: [
 				'Gruntfile.js',
-				'app/**/*.js',
-				'!app/core/samples/**/*.js'
+				'src/**/*.js',
+				'!src/core/samples/**/*.js'
 			],
 			options: {
 				// stricter warnings
@@ -58,10 +58,10 @@ module.exports = function(grunt) {
 		requirejs: {
 			release: {
 				options: {
-					appDir: 'app',
-					mainConfigFile: './app/bootstrap.js',
+					appDir: 'src',
+					mainConfigFile: './src/bootstrap.js',
 					baseUrl: './',
-					dir: 'build',
+					dir: 'dist',
 					name: 'main',
 					removeCombined: true
 				}
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
 		},
 
 		clean: {
-			release: ['./build']
+			release: ['./dist']
 		}
 
 	});
