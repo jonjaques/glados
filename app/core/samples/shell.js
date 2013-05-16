@@ -1,4 +1,4 @@
-﻿define(['core/plugins/router'], function (router) {
+﻿define(['core/plugins/bbrouter'], function (router) {
 
     return {
         router: router,
