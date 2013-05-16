@@ -1,14 +1,14 @@
 requirejs.config({
 	deps: ['./main'],
 	paths: {
-		'vendor'			: './vendor',
-		'text' 				: './vendor/text',
-		'knockout'		: './vendor/knockout',
-		'knockback'		: './vendor/knockback',
-		'backbone'		: './vendor/backbone',
-		'underscore'	: './vendor/underscore',
-		'jquery'			: './vendor/jquery',
-		'sammy' 			: './vendor/sammy'
+		'vendor'			: '../vendor',
+		'text' 				: '../vendor/text',
+		'knockout'		: '../vendor/knockout',
+		'knockback'		: '../vendor/knockback',
+		'backbone'		: '../vendor/backbone',
+		'underscore'	: '../vendor/underscore',
+		'jquery'			: '../vendor/jquery',
+		'sammy' 			: '../vendor/sammy'
 	},
 	shim: {
 		'backbone': {
